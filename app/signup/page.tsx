@@ -41,8 +41,8 @@ export default function SignupPage() {
     return (
       <div style={styles.container}>
         <div style={styles.card}>
-          <h1 style={styles.title}>登録完了</h1>
-          <p style={{ textAlign: "center", color: "#666", marginBottom: 24 }}>
+          <h1 className="logo-font" style={styles.logo}>InstaClone</h1>
+          <p style={{ textAlign: "center", color: "#8e8e8e", fontSize: 14, marginBottom: 20 }}>
             確認メールを送信しました。メール内のリンクをクリックして登録を完了してください。
           </p>
           <a href="/login" style={{ ...styles.button, display: "block", textAlign: "center", textDecoration: "none" }}>
@@ -56,60 +56,50 @@ export default function SignupPage() {
   return (
     <div style={styles.container}>
       <div style={styles.card}>
-        <h1 style={styles.title}>youcando-it.jp</h1>
-        <p style={styles.subtitle}>新規登録</p>
+        <h1 className="logo-font" style={styles.logo}>InstaClone</h1>
+        <p style={styles.subtitle}>
+          友達の写真や動画を見るには登録してください。
+        </p>
 
         <form onSubmit={handleSignup} style={styles.form}>
-          <div style={styles.field}>
-            <label htmlFor="displayName" style={styles.label}>表示名</label>
-            <input
-              id="displayName"
-              type="text"
-              value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
-              required
-              style={styles.input}
-              placeholder="山田太郎"
-            />
-          </div>
-
-          <div style={styles.field}>
-            <label htmlFor="email" style={styles.label}>メールアドレス</label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              style={styles.input}
-              placeholder="you@example.com"
-            />
-          </div>
-
-          <div style={styles.field}>
-            <label htmlFor="password" style={styles.label}>パスワード</label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={6}
-              style={styles.input}
-              placeholder="6文字以上"
-            />
-          </div>
+          <input
+            type="text"
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+            required
+            style={styles.input}
+            placeholder="表示名"
+          />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            style={styles.input}
+            placeholder="メールアドレス"
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            minLength={6}
+            style={styles.input}
+            placeholder="パスワード（6文字以上）"
+          />
 
           {error && <p style={styles.error}>{error}</p>}
 
           <button type="submit" disabled={loading} style={styles.button}>
-            {loading ? "登録中..." : "アカウント作成"}
+            {loading ? "登録中..." : "登録する"}
           </button>
         </form>
+      </div>
 
-        <p style={styles.footer}>
-          すでにアカウントをお持ちの方は{" "}
-          <a href="/login">ログイン</a>
+      <div style={styles.loginCard}>
+        <p style={styles.loginText}>
+          アカウントをお持ちですか？{" "}
+          <a href="/login" style={styles.loginLink}>ログイン</a>
         </p>
       </div>
     </div>
@@ -120,71 +110,80 @@ const styles: Record<string, React.CSSProperties> = {
   container: {
     minHeight: "100vh",
     display: "flex",
+    flexDirection: "column" as const,
     alignItems: "center",
     justifyContent: "center",
     padding: 20,
+    gap: 12,
   },
   card: {
     background: "#fff",
-    borderRadius: 12,
-    padding: 40,
+    border: "1px solid #dbdbdb",
+    borderRadius: 1,
+    padding: "40px 40px 20px",
     width: "100%",
-    maxWidth: 400,
-    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+    maxWidth: 350,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 700,
+  logo: {
+    fontSize: 40,
     textAlign: "center" as const,
-    marginBottom: 4,
+    marginBottom: 8,
+    color: "#262626",
   },
   subtitle: {
     textAlign: "center" as const,
-    color: "#666",
-    marginBottom: 32,
+    color: "#8e8e8e",
+    fontSize: 14,
+    fontWeight: 600,
+    marginBottom: 20,
+    lineHeight: 1.5,
   },
   form: {
     display: "flex",
     flexDirection: "column" as const,
-    gap: 20,
-  },
-  field: {
-    display: "flex",
-    flexDirection: "column" as const,
-    gap: 6,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: 500,
-    color: "#333",
+    gap: 8,
   },
   input: {
     padding: "10px 12px",
-    border: "1px solid #ddd",
-    borderRadius: 6,
-    fontSize: 16,
+    border: "1px solid #dbdbdb",
+    borderRadius: 3,
+    fontSize: 12,
     outline: "none",
+    background: "#fafafa",
+    color: "#262626",
   },
   error: {
-    color: "#e53e3e",
+    color: "#ed4956",
     fontSize: 14,
     textAlign: "center" as const,
   },
   button: {
-    padding: "12px 0",
-    backgroundColor: "#0070f3",
+    padding: "8px 0",
+    backgroundColor: "#0095f6",
     color: "#fff",
     border: "none",
-    borderRadius: 6,
-    fontSize: 16,
+    borderRadius: 8,
+    fontSize: 14,
     fontWeight: 600,
     cursor: "pointer",
     marginTop: 8,
   },
-  footer: {
+  loginCard: {
+    background: "#fff",
+    border: "1px solid #dbdbdb",
+    borderRadius: 1,
+    padding: "20px 40px",
+    width: "100%",
+    maxWidth: 350,
     textAlign: "center" as const,
-    marginTop: 24,
+  },
+  loginText: {
     fontSize: 14,
-    color: "#666",
+    color: "#262626",
+  },
+  loginLink: {
+    color: "#0095f6",
+    fontWeight: 600,
+    textDecoration: "none",
   },
 };

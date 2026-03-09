@@ -2,6 +2,7 @@ import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import CommentSection from "@/components/CommentSection";
 import type { Comment } from "@/lib/types";
+import Link from "next/link";
 
 export default async function PostDetailPage({
   params,
@@ -26,7 +27,6 @@ export default async function PostDetailPage({
     notFound();
   }
 
-  // いいね状態
   const { data: userLike } = await supabase
     .from("likes")
     .select("id")
@@ -34,125 +34,160 @@ export default async function PostDetailPage({
     .eq("post_id", id)
     .maybeSingle();
 
-  // コメント一覧
   const { data: comments } = await supabase
     .from("comments")
     .select("*, profiles(*)")
     .eq("post_id", id)
     .order("created_at", { ascending: true });
 
-  const displayName = post.profiles?.display_name || "匿名";
+  const displayName = post.profiles?.display_name || "Anonymous";
   const date = new Date(post.created_at).toLocaleDateString("ja-JP", {
-    year: "numeric",
     month: "short",
     day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
   });
+  const likeCount = post.likes?.[0]?.count ?? 0;
 
   return (
-      <main style={{ maxWidth: 800, margin: "24px auto", padding: "0 20px" }}>
-        <article style={styles.card}>
-          <div style={styles.header}>
+    <main style={styles.main}>
+      <article style={styles.card}>
+        {/* Header */}
+        <div style={styles.header}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div style={styles.avatar}>{displayName.charAt(0)}</div>
-            <div>
-              <div style={styles.name}>{displayName}</div>
-              <div style={styles.date}>{date}</div>
-            </div>
+            <span style={styles.username}>{displayName}</span>
           </div>
-
-          <h1 style={styles.title}>{post.title}</h1>
-          {post.image_url && (
-            <img
-              src={post.image_url}
-              alt={post.title}
-              style={styles.image}
-            />
-          )}
-          {post.content && (
-            <div style={styles.content}>
-              {post.content.split("\n").map((line: string, i: number) => (
-                <p key={i} style={{ marginBottom: 8 }}>{line}</p>
-              ))}
-            </div>
-          )}
-
-          <div style={styles.meta}>
-            <span>{userLike ? "♥" : "♡"} {post.likes?.[0]?.count ?? 0} いいね</span>
-          </div>
-
-          <CommentSection
-            postId={id}
-            currentUserId={user.id}
-            initialComments={(comments ?? []) as Comment[]}
-          />
-        </article>
-
-        <div style={{ marginTop: 16 }}>
-          <a href="/" style={{ color: "#0070f3", fontSize: 14 }}>
-            ← フィードに戻る
-          </a>
         </div>
-      </main>
+
+        {/* Image */}
+        {post.image_url && (
+          <img
+            src={post.image_url}
+            alt={post.title}
+            style={styles.image}
+          />
+        )}
+
+        {/* Like info */}
+        <div style={styles.likeSection}>
+          <span>{userLike ? "\u2764\uFE0F" : "\u2661"}</span>
+          {" "}
+          {likeCount > 0 && (
+            <span style={styles.likeCount}>{likeCount}件のいいね</span>
+          )}
+        </div>
+
+        {/* Caption */}
+        <div style={styles.caption}>
+          <span style={styles.captionName}>{displayName}</span>
+          {" "}
+          <span style={styles.title}>{post.title}</span>
+        </div>
+
+        {post.content && (
+          <div style={styles.content}>
+            {post.content.split("\n").map((line: string, i: number) => (
+              <p key={i} style={{ marginBottom: 4 }}>{line}</p>
+            ))}
+          </div>
+        )}
+
+        {/* Date */}
+        <div style={styles.date}>{date}</div>
+
+        {/* Comments */}
+        <CommentSection
+          postId={id}
+          currentUserId={user.id}
+          initialComments={(comments ?? []) as Comment[]}
+        />
+      </article>
+
+      <div style={styles.backLink}>
+        <Link href="/" style={{ color: "#00376b", fontSize: 14 }}>
+          &larr; フィードに戻る
+        </Link>
+      </div>
+    </main>
   );
 }
 
 const styles: Record<string, React.CSSProperties> = {
+  main: {
+    maxWidth: 470,
+    margin: "0 auto",
+    padding: "24px 0 0",
+  },
   card: {
     background: "#fff",
-    borderRadius: 8,
-    padding: 32,
-    boxShadow: "0 1px 3px rgba(0,0,0,0.08)",
+    border: "1px solid #dbdbdb",
+    borderRadius: 3,
+    overflow: "hidden",
   },
   header: {
     display: "flex",
     alignItems: "center",
-    gap: 12,
-    marginBottom: 20,
+    justifyContent: "space-between",
+    padding: "12px 16px",
   },
   avatar: {
-    width: 44,
-    height: 44,
+    width: 32,
+    height: 32,
     borderRadius: "50%",
-    backgroundColor: "#0070f3",
+    background: "linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)",
     color: "#fff",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    fontWeight: 700,
-    fontSize: 18,
-  },
-  name: {
     fontWeight: 600,
-    fontSize: 15,
+    fontSize: 14,
   },
-  date: {
-    fontSize: 13,
-    color: "#999",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 700,
-    marginBottom: 16,
+  username: {
+    fontWeight: 600,
+    fontSize: 14,
+    color: "#262626",
   },
   image: {
     width: "100%",
-    maxHeight: 500,
-    objectFit: "cover" as const,
-    borderRadius: 6,
-    marginBottom: 20,
     display: "block",
   },
-  content: {
-    fontSize: 15,
-    color: "#444",
-    lineHeight: 1.8,
-    marginBottom: 20,
-  },
-  meta: {
+  likeSection: {
+    padding: "8px 16px 0",
     fontSize: 14,
-    color: "#666",
-    paddingTop: 16,
-    borderTop: "1px solid #f0f0f0",
+    display: "flex",
+    alignItems: "center",
+    gap: 4,
+  },
+  likeCount: {
+    fontWeight: 600,
+    fontSize: 14,
+  },
+  caption: {
+    padding: "4px 16px",
+    fontSize: 14,
+    lineHeight: 1.5,
+  },
+  captionName: {
+    fontWeight: 600,
+    color: "#262626",
+  },
+  title: {
+    color: "#262626",
+  },
+  content: {
+    padding: "4px 16px 8px",
+    fontSize: 14,
+    color: "#262626",
+    lineHeight: 1.6,
+  },
+  date: {
+    padding: "4px 16px 8px",
+    fontSize: 10,
+    color: "#8e8e8e",
+    textTransform: "uppercase" as const,
+    letterSpacing: 0.2,
+  },
+  backLink: {
+    padding: "16px 0",
+    textAlign: "center" as const,
   },
 };

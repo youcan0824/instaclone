@@ -50,7 +50,6 @@ export default function NewPostPage() {
 
     let imageUrl: string | null = null;
 
-    // Upload image if selected
     if (imageFile) {
       const ext = imageFile.name.split(".").pop();
       const fileName = `${user.id}/${Date.now()}.${ext}`;
@@ -93,36 +92,31 @@ export default function NewPostPage() {
   return (
     <div style={styles.container}>
       <div style={styles.card}>
-        <h1 style={styles.heading}>新規投稿</h1>
+        <div style={styles.cardHeader}>
+          <button
+            type="button"
+            onClick={() => router.back()}
+            style={styles.cancelLink}
+          >
+            キャンセル
+          </button>
+          <h1 style={styles.heading}>新規投稿</h1>
+          <button
+            type="submit"
+            form="post-form"
+            disabled={loading || !title.trim()}
+            style={{
+              ...styles.shareBtn,
+              opacity: title.trim() ? 1 : 0.5,
+            }}
+          >
+            {loading ? "投稿中..." : "シェア"}
+          </button>
+        </div>
 
-        <form onSubmit={handleSubmit} style={styles.form}>
-          <div style={styles.field}>
-            <label htmlFor="title" style={styles.label}>タイトル</label>
-            <input
-              id="title"
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-              style={styles.input}
-              placeholder="投稿のタイトル"
-            />
-          </div>
-
-          <div style={styles.field}>
-            <label htmlFor="content" style={styles.label}>本文</label>
-            <textarea
-              id="content"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              style={styles.textarea}
-              rows={10}
-              placeholder="投稿の内容を入力..."
-            />
-          </div>
-
-          <div style={styles.field}>
-            <label style={styles.label}>画像（任意）</label>
+        <form id="post-form" onSubmit={handleSubmit} style={styles.form}>
+          {/* Image Upload Area */}
+          <div style={styles.imageArea}>
             {imagePreview ? (
               <div style={styles.previewWrap}>
                 <img
@@ -135,7 +129,7 @@ export default function NewPostPage() {
                   onClick={removeImage}
                   style={styles.removeBtn}
                 >
-                  削除
+                  &times;
                 </button>
               </div>
             ) : (
@@ -144,7 +138,14 @@ export default function NewPostPage() {
                 onClick={() => fileInputRef.current?.click()}
                 style={styles.uploadBtn}
               >
-                画像を選択
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8e8e8e" strokeWidth="1">
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <circle cx="8.5" cy="8.5" r="1.5" />
+                  <path d="M21 15l-5-5L5 21" />
+                </svg>
+                <span style={{ color: "#8e8e8e", fontSize: 14, marginTop: 8 }}>
+                  写真を選択
+                </span>
               </button>
             )}
             <input
@@ -154,23 +155,34 @@ export default function NewPostPage() {
               onChange={handleImageChange}
               style={{ display: "none" }}
             />
-            <span style={styles.hint}>JPEG, PNG, WebP, GIF（5MB以下）</span>
+          </div>
+
+          {/* Title */}
+          <div style={styles.field}>
+            <input
+              id="title"
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+              style={styles.input}
+              placeholder="タイトルを入力..."
+            />
+          </div>
+
+          {/* Content */}
+          <div style={styles.field}>
+            <textarea
+              id="content"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              style={styles.textarea}
+              rows={6}
+              placeholder="キャプションを入力..."
+            />
           </div>
 
           {error && <p style={styles.error}>{error}</p>}
-
-          <div style={styles.buttons}>
-            <button
-              type="button"
-              onClick={() => router.back()}
-              style={styles.cancelBtn}
-            >
-              キャンセル
-            </button>
-            <button type="submit" disabled={loading} style={styles.submitBtn}>
-              {loading ? "投稿中..." : "投稿する"}
-            </button>
-          </div>
         </form>
       </div>
     </div>
@@ -179,114 +191,118 @@ export default function NewPostPage() {
 
 const styles: Record<string, React.CSSProperties> = {
   container: {
-    maxWidth: 800,
-    margin: "24px auto",
-    padding: "0 20px",
+    maxWidth: 470,
+    margin: "0 auto",
+    padding: "24px 0 0",
   },
   card: {
     background: "#fff",
-    borderRadius: 8,
-    padding: 32,
-    boxShadow: "0 1px 3px rgba(0,0,0,0.08)",
+    border: "1px solid #dbdbdb",
+    borderRadius: 3,
+    overflow: "hidden",
+  },
+  cardHeader: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: "12px 16px",
+    borderBottom: "1px solid #efefef",
   },
   heading: {
-    fontSize: 20,
-    fontWeight: 700,
-    marginBottom: 24,
+    fontSize: 16,
+    fontWeight: 600,
+    color: "#262626",
+  },
+  cancelLink: {
+    background: "none",
+    border: "none",
+    color: "#262626",
+    fontSize: 14,
+    cursor: "pointer",
+    padding: 0,
+  },
+  shareBtn: {
+    background: "none",
+    border: "none",
+    color: "#0095f6",
+    fontWeight: 600,
+    fontSize: 14,
+    cursor: "pointer",
+    padding: 0,
   },
   form: {
     display: "flex",
     flexDirection: "column" as const,
-    gap: 20,
   },
-  field: {
+  imageArea: {
     display: "flex",
-    flexDirection: "column" as const,
-    gap: 6,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: 500,
-  },
-  input: {
-    padding: "10px 12px",
-    border: "1px solid #ddd",
-    borderRadius: 6,
-    fontSize: 16,
-    outline: "none",
-  },
-  textarea: {
-    padding: "10px 12px",
-    border: "1px solid #ddd",
-    borderRadius: 6,
-    fontSize: 15,
-    outline: "none",
-    resize: "vertical" as const,
-    lineHeight: 1.7,
-    fontFamily: "inherit",
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 200,
+    borderBottom: "1px solid #efefef",
   },
   uploadBtn: {
-    padding: "12px 0",
-    border: "2px dashed #ddd",
-    borderRadius: 6,
-    background: "#fafafa",
-    color: "#666",
-    fontSize: 14,
+    display: "flex",
+    flexDirection: "column" as const,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "40px 0",
+    width: "100%",
+    background: "none",
+    border: "none",
     cursor: "pointer",
   },
   previewWrap: {
     position: "relative" as const,
+    width: "100%",
   },
   preview: {
     width: "100%",
-    maxHeight: 300,
-    objectFit: "cover" as const,
-    borderRadius: 6,
     display: "block",
   },
   removeBtn: {
     position: "absolute" as const,
     top: 8,
     right: 8,
-    padding: "4px 12px",
+    width: 28,
+    height: 28,
+    borderRadius: "50%",
     backgroundColor: "rgba(0,0,0,0.6)",
     color: "#fff",
     border: "none",
-    borderRadius: 4,
-    fontSize: 12,
+    fontSize: 18,
     cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    lineHeight: 1,
   },
-  hint: {
-    fontSize: 12,
-    color: "#999",
+  field: {
+    borderBottom: "1px solid #efefef",
+  },
+  input: {
+    width: "100%",
+    padding: "14px 16px",
+    border: "none",
+    fontSize: 16,
+    outline: "none",
+    color: "#262626",
+  },
+  textarea: {
+    width: "100%",
+    padding: "14px 16px",
+    border: "none",
+    fontSize: 14,
+    outline: "none",
+    resize: "none" as const,
+    lineHeight: 1.6,
+    fontFamily: "inherit",
+    color: "#262626",
   },
   error: {
-    color: "#e53e3e",
+    color: "#ed4956",
     fontSize: 14,
-  },
-  buttons: {
-    display: "flex",
-    justifyContent: "flex-end",
-    gap: 12,
-    marginTop: 8,
-  },
-  cancelBtn: {
-    padding: "10px 20px",
-    backgroundColor: "transparent",
-    color: "#666",
-    border: "1px solid #ddd",
-    borderRadius: 6,
-    fontSize: 14,
-    cursor: "pointer",
-  },
-  submitBtn: {
-    padding: "10px 24px",
-    backgroundColor: "#0070f3",
-    color: "#fff",
-    border: "none",
-    borderRadius: 6,
-    fontSize: 14,
-    fontWeight: 600,
-    cursor: "pointer",
+    padding: "12px 16px",
+    textAlign: "center" as const,
   },
 };

@@ -33,7 +33,7 @@ export default async function Home() {
   return (
     <>
       <Navbar userEmail={user.email ?? ""} />
-      <main style={{ maxWidth: 800, margin: "24px auto", padding: "0 20px" }}>
+      <main style={{ maxWidth: 470, margin: "0 auto", padding: "24px 0 0" }}>
         <Feed posts={postsWithLikeStatus} currentUserId={user.id} />
       </main>
     </>

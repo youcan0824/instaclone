@@ -38,24 +38,19 @@ export default function CommentSection({
 
   return (
     <div style={styles.section}>
-      <h3 style={styles.heading}>コメント ({comments.length})</h3>
-
       {comments.map((c) => (
         <div key={c.id} style={styles.comment}>
-          <div style={styles.commentHeader}>
-            <span style={styles.commentName}>
-              {c.profiles?.display_name || "匿名"}
-            </span>
-            <span style={styles.commentDate}>
-              {new Date(c.created_at).toLocaleDateString("ja-JP", {
-                month: "short",
-                day: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </span>
+          <span style={styles.commentName}>
+            {c.profiles?.display_name || "Anonymous"}
+          </span>
+          {" "}
+          <span style={styles.commentText}>{c.content}</span>
+          <div style={styles.commentDate}>
+            {new Date(c.created_at).toLocaleDateString("ja-JP", {
+              month: "short",
+              day: "numeric",
+            })}
           </div>
-          <p style={styles.commentText}>{c.content}</p>
         </div>
       ))}
 
@@ -64,11 +59,18 @@ export default function CommentSection({
           type="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="コメントを入力..."
+          placeholder="コメントを追加..."
           style={styles.input}
         />
-        <button type="submit" disabled={sending || !text.trim()} style={styles.submitBtn}>
-          {sending ? "送信中" : "送信"}
+        <button
+          type="submit"
+          disabled={sending || !text.trim()}
+          style={{
+            ...styles.submitBtn,
+            opacity: text.trim() ? 1 : 0.5,
+          }}
+        >
+          投稿する
         </button>
       </form>
     </div>
@@ -77,56 +79,47 @@ export default function CommentSection({
 
 const styles: Record<string, React.CSSProperties> = {
   section: {
-    marginTop: 24,
-  },
-  heading: {
-    fontSize: 16,
-    fontWeight: 600,
-    marginBottom: 16,
+    borderTop: "1px solid #efefef",
   },
   comment: {
-    padding: "12px 0",
-    borderBottom: "1px solid #f0f0f0",
-  },
-  commentHeader: {
-    display: "flex",
-    alignItems: "center",
-    gap: 8,
-    marginBottom: 4,
+    padding: "8px 16px",
+    fontSize: 14,
+    lineHeight: 1.5,
   },
   commentName: {
     fontWeight: 600,
-    fontSize: 13,
-  },
-  commentDate: {
-    fontSize: 12,
-    color: "#999",
+    color: "#262626",
   },
   commentText: {
-    fontSize: 14,
-    color: "#444",
+    color: "#262626",
+  },
+  commentDate: {
+    fontSize: 10,
+    color: "#8e8e8e",
+    marginTop: 4,
+    textTransform: "uppercase" as const,
   },
   form: {
     display: "flex",
-    gap: 8,
-    marginTop: 16,
+    alignItems: "center",
+    padding: "12px 16px",
+    borderTop: "1px solid #efefef",
   },
   input: {
     flex: 1,
-    padding: "10px 12px",
-    border: "1px solid #ddd",
-    borderRadius: 6,
-    fontSize: 14,
+    border: "none",
     outline: "none",
+    fontSize: 14,
+    color: "#262626",
+    background: "transparent",
   },
   submitBtn: {
-    padding: "10px 20px",
-    backgroundColor: "#0070f3",
-    color: "#fff",
+    background: "none",
     border: "none",
-    borderRadius: 6,
-    fontSize: 14,
+    color: "#0095f6",
     fontWeight: 600,
+    fontSize: 14,
     cursor: "pointer",
+    padding: 0,
   },
 };

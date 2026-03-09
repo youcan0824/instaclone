@@ -35,55 +35,79 @@ export default function PostCard({
     }
   };
 
-  const displayName = post.profiles?.display_name || "匿名";
+  const displayName = post.profiles?.display_name || "Anonymous";
   const date = new Date(post.created_at).toLocaleDateString("ja-JP", {
     month: "short",
     day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
   });
 
   return (
     <article style={styles.card}>
+      {/* Header */}
       <div style={styles.header}>
-        <div style={styles.avatar}>
-          {displayName.charAt(0)}
-        </div>
-        <div>
-          <div style={styles.name}>{displayName}</div>
-          <div style={styles.date}>{date}</div>
-        </div>
+        <Link href={`/post/${post.id}`} style={{ textDecoration: "none", color: "inherit", display: "flex", alignItems: "center", gap: 10 }}>
+          <div style={styles.avatar}>{displayName.charAt(0)}</div>
+          <span style={styles.username}>{displayName}</span>
+        </Link>
       </div>
 
-      <Link href={`/post/${post.id}`} style={{ textDecoration: "none", color: "inherit" }}>
-        <h2 style={styles.title}>{post.title}</h2>
-        {post.image_url && (
+      {/* Image */}
+      {post.image_url && (
+        <Link href={`/post/${post.id}`}>
           <img
             src={post.image_url}
             alt={post.title}
             style={styles.image}
           />
-        )}
-        {post.content && (
-          <p style={styles.content}>
-            {post.content.length > 200
-              ? post.content.slice(0, 200) + "..."
-              : post.content}
-          </p>
-        )}
-      </Link>
-
-      <div style={styles.actions}>
-        <button onClick={toggleLike} style={styles.actionBtn}>
-          <span style={{ color: liked ? "#e53e3e" : "#999" }}>
-            {liked ? "♥" : "♡"}
-          </span>{" "}
-          {likeCount}
-        </button>
-        <Link href={`/post/${post.id}`} style={styles.actionBtn}>
-          💬 {commentCount}
         </Link>
+      )}
+
+      {/* Action Bar */}
+      <div style={styles.actions}>
+        <div style={styles.actionsLeft}>
+          <button onClick={toggleLike} style={styles.actionBtn}>
+            <svg width="24" height="24" viewBox="0 0 24 24"
+              fill={liked ? "#ed4956" : "none"}
+              stroke={liked ? "#ed4956" : "currentColor"}
+              strokeWidth="2"
+            >
+              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+            </svg>
+          </button>
+          <Link href={`/post/${post.id}`} style={styles.actionBtn}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+            </svg>
+          </Link>
+        </div>
       </div>
+
+      {/* Like Count */}
+      {likeCount > 0 && (
+        <div style={styles.likeCount}>{likeCount}件のいいね</div>
+      )}
+
+      {/* Caption */}
+      <div style={styles.caption}>
+        <Link href={`/post/${post.id}`} style={styles.captionName}>{displayName}</Link>
+        {" "}
+        <span>{post.title}</span>
+        {post.content && (
+          <span style={styles.contentPreview}>
+            {" "}{post.content.length > 80 ? post.content.slice(0, 80) + "..." : post.content}
+          </span>
+        )}
+      </div>
+
+      {/* Comment Count */}
+      {commentCount > 0 && (
+        <Link href={`/post/${post.id}`} style={styles.commentLink}>
+          コメント{commentCount}件をすべて見る
+        </Link>
+      )}
+
+      {/* Date */}
+      <div style={styles.date}>{date}</div>
     </article>
   );
 }
@@ -91,72 +115,86 @@ export default function PostCard({
 const styles: Record<string, React.CSSProperties> = {
   card: {
     background: "#fff",
-    borderRadius: 8,
-    padding: 20,
-    boxShadow: "0 1px 3px rgba(0,0,0,0.08)",
+    borderBottom: "1px solid #dbdbdb",
   },
   header: {
     display: "flex",
     alignItems: "center",
-    gap: 12,
-    marginBottom: 12,
+    justifyContent: "space-between",
+    padding: "12px 16px",
   },
   avatar: {
-    width: 40,
-    height: 40,
+    width: 32,
+    height: 32,
     borderRadius: "50%",
-    backgroundColor: "#0070f3",
+    background: "linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)",
     color: "#fff",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    fontWeight: 700,
-    fontSize: 16,
-  },
-  name: {
     fontWeight: 600,
     fontSize: 14,
   },
-  date: {
-    fontSize: 12,
-    color: "#999",
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 700,
-    marginBottom: 8,
+  username: {
+    fontWeight: 600,
+    fontSize: 14,
+    color: "#262626",
   },
   image: {
     width: "100%",
-    maxHeight: 300,
-    objectFit: "cover" as const,
-    borderRadius: 6,
-    marginBottom: 12,
     display: "block",
-  },
-  content: {
-    fontSize: 14,
-    color: "#555",
-    lineHeight: 1.7,
-    marginBottom: 12,
   },
   actions: {
     display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: "8px 16px 0",
+  },
+  actionsLeft: {
+    display: "flex",
+    alignItems: "center",
     gap: 16,
-    paddingTop: 12,
-    borderTop: "1px solid #f0f0f0",
   },
   actionBtn: {
     background: "none",
     border: "none",
     cursor: "pointer",
-    fontSize: 14,
-    color: "#666",
-    padding: "4px 8px",
-    borderRadius: 4,
-    textDecoration: "none",
+    padding: 0,
+    color: "#262626",
     display: "flex",
     alignItems: "center",
-    gap: 4,
+    textDecoration: "none",
+  },
+  likeCount: {
+    padding: "4px 16px 0",
+    fontWeight: 600,
+    fontSize: 14,
+  },
+  caption: {
+    padding: "4px 16px",
+    fontSize: 14,
+    lineHeight: 1.5,
+  },
+  captionName: {
+    fontWeight: 600,
+    color: "#262626",
+    textDecoration: "none",
+  },
+  contentPreview: {
+    color: "#262626",
+  },
+  commentLink: {
+    display: "block",
+    padding: "2px 16px",
+    fontSize: 14,
+    color: "#8e8e8e",
+    textDecoration: "none",
+  },
+  date: {
+    padding: "4px 16px 12px",
+    fontSize: 10,
+    color: "#8e8e8e",
+    textTransform: "uppercase" as const,
+    letterSpacing: 0.2,
   },
 };
