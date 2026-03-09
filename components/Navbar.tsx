@@ -58,11 +58,20 @@ export default function Navbar({ userEmail }: { userEmail: string }) {
             <line x1="8" y1="12" x2="16" y2="12" />
           </svg>
         </Link>
-        <div style={styles.bottomIcon} title={userEmail}>
-          <div style={styles.avatarSmall}>
+        <Link
+          href="/profile"
+          style={pathname === "/profile" || pathname.startsWith("/profile/") ? styles.bottomIconActive : styles.bottomIcon}
+          title="プロフィール"
+        >
+          <div style={{
+            ...styles.avatarSmall,
+            ...(pathname === "/profile" || pathname.startsWith("/profile/")
+              ? { border: "2px solid #262626" }
+              : {}),
+          }}>
             {userEmail.charAt(0).toUpperCase()}
           </div>
-        </div>
+        </Link>
       </nav>
     </>
   );
