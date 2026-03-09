@@ -57,6 +57,13 @@ export default function PostCard({
 
       <Link href={`/post/${post.id}`} style={{ textDecoration: "none", color: "inherit" }}>
         <h2 style={styles.title}>{post.title}</h2>
+        {post.image_url && (
+          <img
+            src={post.image_url}
+            alt={post.title}
+            style={styles.image}
+          />
+        )}
         {post.content && (
           <p style={styles.content}>
             {post.content.length > 200
@@ -118,6 +125,14 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: 18,
     fontWeight: 700,
     marginBottom: 8,
+  },
+  image: {
+    width: "100%",
+    maxHeight: 300,
+    objectFit: "cover" as const,
+    borderRadius: 6,
+    marginBottom: 12,
+    display: "block",
   },
   content: {
     fontSize: 14,

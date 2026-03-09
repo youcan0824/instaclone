@@ -62,6 +62,13 @@ export default async function PostDetailPage({
           </div>
 
           <h1 style={styles.title}>{post.title}</h1>
+          {post.image_url && (
+            <img
+              src={post.image_url}
+              alt={post.title}
+              style={styles.image}
+            />
+          )}
           {post.content && (
             <div style={styles.content}>
               {post.content.split("\n").map((line: string, i: number) => (
@@ -127,6 +134,14 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: 24,
     fontWeight: 700,
     marginBottom: 16,
+  },
+  image: {
+    width: "100%",
+    maxHeight: 500,
+    objectFit: "cover" as const,
+    borderRadius: 6,
+    marginBottom: 20,
+    display: "block",
   },
   content: {
     fontSize: 15,
