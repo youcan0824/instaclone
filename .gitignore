@@ -1,10 +1,16 @@
 # 機密情報
 .env
+.env.local
+.env*.local
 *.key
 *.pem
 credentials/
 **/credentials/
 *secret*
+
+# Next.js
+.next/
+out/
 
 # AIメモリ（機密情報を含む可能性）
 00_context/memories/
@@ -17,6 +23,9 @@ DAILY.md
 
 # プロジェクト詳細（顧客情報保護）
 03_projects/
+
+# 健康データ（個人情報保護）
+06_health/
 
 # OS・エディタ
 .DS_Store
