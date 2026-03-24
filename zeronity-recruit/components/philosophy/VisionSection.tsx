@@ -25,66 +25,53 @@ export default function VisionSection() {
         </p>
 
         {/* Circular relationship diagram */}
-        <div className="relative w-72 h-72 mx-auto">
-          {/* Top node */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full border border-white/20 bg-bg-primary flex items-center justify-center text-sm font-bold text-text-primary">
-            {businesses[0].label}
-          </div>
-
-          {/* Bottom-left node */}
-          <div className="absolute bottom-0 left-0 w-28 h-28 rounded-full border border-white/20 bg-bg-primary flex items-center justify-center text-sm font-bold text-text-primary">
-            {businesses[1].label}
-          </div>
-
-          {/* Bottom-right node */}
-          <div className="absolute bottom-0 right-0 w-28 h-28 rounded-full border border-white/20 bg-bg-primary flex items-center justify-center text-sm font-bold text-text-primary">
-            {businesses[2].label}
-          </div>
-
-          {/* SVG arrows connecting nodes */}
+        <div className="relative mx-auto" style={{ width: 320, height: 300 }}>
           <svg
-            className="absolute inset-0 w-full h-full"
-            viewBox="0 0 288 288"
+            width="320"
+            height="300"
+            viewBox="0 0 320 300"
             fill="none"
+            className="absolute inset-0"
           >
-            {/* Top to Bottom-right */}
-            <line
-              x1="175" y1="85"
-              x2="235" y2="195"
-              stroke="url(#grad1)" strokeWidth="1.5"
-              markerEnd="url(#arrowhead)"
-            />
-            {/* Bottom-right to Bottom-left */}
-            <line
-              x1="185" y1="245"
-              x2="105" y2="245"
-              stroke="url(#grad1)" strokeWidth="1.5"
-              markerEnd="url(#arrowhead)"
-            />
-            {/* Bottom-left to Top */}
-            <line
-              x1="55" y1="195"
-              x2="115" y2="85"
-              stroke="url(#grad1)" strokeWidth="1.5"
-              markerEnd="url(#arrowhead)"
-            />
-
             <defs>
-              <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+              <linearGradient id="grad-pr" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stopColor="#7a00df" />
                 <stop offset="100%" stopColor="#e8380d" />
               </linearGradient>
               <marker
-                id="arrowhead"
-                markerWidth="8"
-                markerHeight="6"
-                refX="8"
-                refY="3"
+                id="arrow"
+                markerWidth="10"
+                markerHeight="7"
+                refX="9"
+                refY="3.5"
                 orient="auto"
               >
-                <polygon points="0 0, 8 3, 0 6" fill="#e8380d" />
+                <polygon points="0 0, 10 3.5, 0 7" fill="#e8380d" />
               </marker>
             </defs>
+
+            {/* Arrow: 人材教育(top) → 業務支援(bottom-left) */}
+            <line x1="120" y1="95" x2="75" y2="185" stroke="url(#grad-pr)" strokeWidth="2" markerEnd="url(#arrow)" />
+            {/* Arrow: 業務支援(bottom-left) → 環境開発(bottom-right) */}
+            <line x1="120" y1="240" x2="200" y2="240" stroke="url(#grad-pr)" strokeWidth="2" markerEnd="url(#arrow)" />
+            {/* Arrow: 環境開発(bottom-right) → 人材教育(top) */}
+            <line x1="245" y1="185" x2="200" y2="95" stroke="url(#grad-pr)" strokeWidth="2" markerEnd="url(#arrow)" />
+
+            {/* Node circles */}
+            {/* 人材教育 - top center */}
+            <circle cx="160" cy="60" r="50" fill="#0a0a0a" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
+            <text x="160" y="56" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold">人材教育</text>
+            <text x="160" y="74" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="10">Education</text>
+
+            {/* 業務支援 - bottom left */}
+            <circle cx="65" cy="235" r="50" fill="#0a0a0a" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
+            <text x="65" y="231" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold">業務支援</text>
+            <text x="65" y="249" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="10">Consulting</text>
+
+            {/* 環境開発 - bottom right */}
+            <circle cx="255" cy="235" r="50" fill="#0a0a0a" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
+            <text x="255" y="231" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold">環境開発</text>
+            <text x="255" y="249" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="10">Space</text>
           </svg>
         </div>
       </div>
