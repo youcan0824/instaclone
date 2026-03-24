@@ -5,13 +5,13 @@ export default function AlumniStories() {
   return (
     <section className="py-24 bg-bg-primary">
       <div className="max-w-5xl mx-auto px-4">
-        <SectionHeading label="ALUMNI" title="卒業生の活躍" />
+        <SectionHeading label="CAREER" title="キャリア事例" />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {alumniStories.map((story) => (
             <div
               key={story.name}
-              className="bg-white/5 rounded-xl p-6"
+              className="bg-white/5 border border-white/10 rounded-xl p-6"
             >
               <p className="text-text-primary font-bold text-lg">
                 {story.name}

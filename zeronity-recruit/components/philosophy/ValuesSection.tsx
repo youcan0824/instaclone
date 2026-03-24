@@ -39,6 +39,7 @@ export default function ValuesSection() {
             </motion.div>
           ))}
         </div>
+
       </div>
     </section>
   );

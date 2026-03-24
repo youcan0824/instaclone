@@ -17,6 +17,7 @@ export default function FAQ() {
       <div className="max-w-3xl mx-auto px-4">
         <SectionHeading label="FAQ" title="よくある質問" />
 
+
         <div className="space-y-3">
           {faqs.map((faq, index) => (
             <div

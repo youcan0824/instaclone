@@ -28,7 +28,7 @@ export default function InterviewArticle() {
       <div className="max-w-5xl mx-auto px-4">
         <SectionHeading
           label="INTERVIEW"
-          title="社員インタビュー"
+          title="メンバーインタビュー"
           subtitle="Zeronityで働くメンバーのリアルな声をお届けします"
         />
 
@@ -119,18 +119,7 @@ export default function InterviewArticle() {
                 </div>
 
                 {/* Profile */}
-                <div className="flex flex-col sm:flex-row gap-5 items-start mb-8">
-                  {selectedInterview.photo && (
-                    <div className="w-20 h-20 sm:w-24 sm:h-24 relative rounded-xl overflow-hidden shrink-0 bg-white/10">
-                      <Image
-                        src={selectedInterview.photo}
-                        alt={selectedInterview.name}
-                        fill
-                        className="object-cover"
-                        sizes="96px"
-                      />
-                    </div>
-                  )}
+                <div className="flex flex-col gap-2 mb-8">
                   <div>
                     <span className="text-xs text-accent-purple font-semibold tracking-wider uppercase">
                       INTERVIEW

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { careerLevels } from "@/data/environment";
 import SectionHeading from "@/components/ui/SectionHeading";
 
@@ -14,6 +15,10 @@ export default function CareerPath() {
     <section className="py-24 bg-bg-secondary">
       <div className="max-w-4xl mx-auto px-4">
         <SectionHeading label="CAREER PATH" title="キャリアパス" />
+
+        <div className="mt-8 mb-12">
+          <Image src="/images/pdf-p23.png" alt="キャリア事例 Before/After" width={960} height={540} className="rounded-xl w-full h-auto" />
+        </div>
 
         {/* Staircase visual */}
         <div className="flex flex-col gap-2 mb-16">

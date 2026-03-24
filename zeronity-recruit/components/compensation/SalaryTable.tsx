@@ -7,6 +7,7 @@ export default function SalaryTable() {
       <div className="max-w-5xl mx-auto px-4">
         <SectionHeading label="SALARY" title="給与テーブル" />
 
+
         <div className="overflow-x-auto">
           <table className="w-full bg-white/5 rounded-xl overflow-hidden">
             <thead>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { philosophy } from "@/data/philosophy";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { motion, useInView } from "framer-motion";
@@ -18,6 +19,10 @@ export default function PhilosophySection() {
           label="PHILOSOPHY"
           title="私たちが大切にしていること"
         />
+
+        <div className="mt-8 mb-12">
+          <Image src="/images/pdf-p5.png" alt="新しい世界を起動する -Zero to Infinity-" width={960} height={540} className="rounded-xl w-full h-auto" />
+        </div>
 
         <div ref={ref} className="text-center mt-12">
           <motion.p

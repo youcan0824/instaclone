@@ -7,6 +7,7 @@ export default function FreelanceSection() {
       <div className="max-w-5xl mx-auto px-4">
         <SectionHeading label="FOR FREELANCE" title="フリーコンサルの方へ" />
 
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {freelanceAttractions.map((item) => (
             <div

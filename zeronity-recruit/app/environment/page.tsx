@@ -3,7 +3,6 @@ import FiveAttractions from "@/components/environment/FiveAttractions";
 import FreelanceSection from "@/components/environment/FreelanceSection";
 import DailySchedule from "@/components/environment/DailySchedule";
 import CareerPath from "@/components/environment/CareerPath";
-import AlumniStories from "@/components/environment/AlumniStories";
 import Benefits from "@/components/environment/Benefits";
 import CTAButtons from "@/components/ui/CTAButtons";
 
@@ -17,11 +16,10 @@ export default function EnvironmentPage() {
   return (
     <>
       <FiveAttractions />
-      <FreelanceSection />
-      <DailySchedule />
       <CareerPath />
-      <AlumniStories />
+      <DailySchedule />
       <Benefits />
+      <FreelanceSection />
 
       <section className="py-24 bg-bg-primary">
         <div className="max-w-4xl mx-auto px-4 text-center">

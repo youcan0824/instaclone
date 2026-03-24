@@ -17,6 +17,7 @@ export default function SelectionFlow() {
       <div className="max-w-5xl mx-auto px-4">
         <SectionHeading label="SELECTION" title="選考フロー" />
 
+
         {/* Tab buttons */}
         <div className="flex justify-center gap-2 mb-12">
           {tabKeys.map((key) => (

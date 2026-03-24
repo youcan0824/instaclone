@@ -7,21 +7,17 @@ export default function EvaluationSystem() {
       <div className="max-w-5xl mx-auto px-4">
         <SectionHeading label="EVALUATION" title="評価制度" />
 
+
         {/* Evaluation Axes */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
           {evaluationAxes.map((item) => (
             <div
               key={item.axis}
               className="bg-white/5 border border-white/10 rounded-xl p-6"
             >
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-lg font-bold text-text-primary">
-                  {item.axis}
-                </h3>
-                <span className="text-accent-purple font-bold text-lg">
-                  {item.weight}
-                </span>
-              </div>
+              <h3 className="text-lg font-bold text-text-primary mb-3">
+                {item.axis}
+              </h3>
               <p className="text-text-sub text-sm leading-relaxed">
                 {item.description}
               </p>

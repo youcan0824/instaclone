@@ -10,6 +10,7 @@ export default function FiveAttractions() {
       <div className="max-w-5xl mx-auto px-4">
         <SectionHeading label="ENVIRONMENT" title="Zeronityで働く5つの魅力" />
 
+
         {/* First 3 cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {firstThree.map((item, i) => (
