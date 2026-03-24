@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;600;700;800;900&display=swap");
+@import "tailwindcss";
+
+@theme inline {
+  /* Colors */
+  --color-bg-primary: #0a0a0a;
+  --color-bg-secondary: #111111;
+  --color-accent-purple: #7a00df;
+  --color-accent-red: #e8380d;
+  --color-text-primary: #ffffff;
+  --color-text-sub: rgba(255, 255, 255, 0.5);
+  --color-text-label: rgba(255, 255, 255, 0.4);
+
+  /* Fonts */
+  --font-sans: "Noto Sans JP", "Inter", sans-serif;
+  --font-heading: "Inter", "Noto Sans JP", sans-serif;
+
+  /* Gradients */
+  --background-image-gradient-accent: linear-gradient(90deg, #7a00df, #e8380d);
+  --background-image-gradient-hero: linear-gradient(
+    135deg,
+    #0a0a0a,
+    #1a0a2e,
+    #1a0508,
+    #0a0a0a
+  );
+  --background-image-gradient-section: linear-gradient(
+    135deg,
+    #1a0a2e,
+    #0a0a0a
+  );
+}
+
+body {
+  background-color: #0a0a0a;
+  color: #ffffff;
+  font-family: "Noto Sans JP", "Inter", sans-serif;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #7a00df, #e8380d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
