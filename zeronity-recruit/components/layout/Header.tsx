@@ -5,13 +5,13 @@ import Link from "next/link";
 import MobileMenu from "./MobileMenu";
 
 const navItems = [
-  { href: "#philosophy", label: "Philosophy" },
-  { href: "#business", label: "Business" },
-  { href: "#projects", label: "Projects" },
-  { href: "#environment", label: "Environment" },
-  { href: "#compensation", label: "Compensation" },
-  { href: "#members", label: "Members" },
-  { href: "#recruit", label: "Recruit" },
+  { href: "/philosophy", label: "Philosophy" },
+  { href: "/business", label: "Business" },
+  { href: "/projects", label: "Projects" },
+  { href: "/environment", label: "Environment" },
+  { href: "/compensation", label: "Compensation" },
+  { href: "/members", label: "Members" },
+  { href: "/recruit", label: "Recruit" },
 ];
 
 export default function Header() {
