@@ -10,9 +10,37 @@ export const metadata: Metadata = {
     "Zeronityの募集職種、選考フロー、よくある質問をご紹介します。",
 };
 
+const jobPostingJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "JobPosting",
+  title: "新規事業開発コンサルタント",
+  description: "経営戦略〜実行支援まで幅広く支援を行います。",
+  hiringOrganization: {
+    "@type": "Organization",
+    name: "Zeronity株式会社",
+    sameAs: "https://www.0-i.co.jp/",
+    logo: "https://recruit.0-i.co.jp/images/logo.png",
+  },
+  jobLocation: {
+    "@type": "Place",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "新宿区",
+      addressRegion: "東京都",
+      addressCountry: "JP",
+    },
+  },
+  employmentType: "FULL_TIME",
+  datePosted: "2026-03-24",
+};
+
 export default function RecruitPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingJsonLd) }}
+      />
       <JobPositions />
       <SelectionFlow />
       <FAQ />
