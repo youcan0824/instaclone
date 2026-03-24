@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { boardMembers } from "@/data/members";
 import SectionHeading from "@/components/ui/SectionHeading";
 
@@ -16,10 +17,14 @@ export default function BoardMembers() {
                 key={member.name}
                 className="bg-white/5 rounded-xl p-8"
               >
-                <div className="w-full h-48 bg-white/10 rounded-lg flex items-center justify-center mb-6">
-                  <span className="text-4xl font-bold text-white/30">
-                    {initials}
-                  </span>
+                <div className="w-full h-64 relative rounded-lg overflow-hidden mb-6 bg-white/10">
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
                 </div>
                 <h3 className="text-xl font-bold text-text-primary">
                   {member.name}
