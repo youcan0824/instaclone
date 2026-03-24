@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import BoardMembers from "@/components/members/BoardMembers";
-import EmployeeCards from "@/components/members/EmployeeCards";
+import InterviewArticle from "@/components/members/InterviewArticle";
 import CompanyStats from "@/components/members/CompanyStats";
 import CTAButtons from "@/components/ui/CTAButtons";
 
@@ -14,7 +14,7 @@ export default function MembersPage() {
   return (
     <>
       <BoardMembers />
-      <EmployeeCards />
+      <InterviewArticle />
       <CompanyStats />
 
       <section className="py-24 bg-bg-primary">
