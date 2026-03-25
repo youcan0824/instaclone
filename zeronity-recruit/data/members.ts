@@ -9,15 +9,6 @@ export const boardMembers = [
       "大手コンサルティングファームを経て2017年にZeronityを創業。「人の可能性を最大化する」をミッションに、教育×コンサルティングの新しいビジネスモデルを構築。",
   },
   {
-    name: "小川隆太",
-    role: "取締役 COO",
-    image: "/images/board-ogawa.png",
-    message:
-      "Zeronityの強みは「人」です。一人ひとりの成長にコミットし、その成長がクライアントの価値につながる。この好循環を生み出し続けることが、私の使命だと考えています。",
-    background:
-      "大手SIer・コンサルティングファームを経てZeronityに参画。事業運営全般を統括し、組織の急成長を牽引。",
-  },
-  {
     name: "眞田志帆",
     role: "執行役",
     image: "/images/board-sanada.png",
